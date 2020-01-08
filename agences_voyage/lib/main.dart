@@ -18,7 +18,20 @@ class MyApp extends StatelessWidget {
           actions: <Widget>[Icon(Icons.more_horiz)],
         ),
         body: Container(
-          child: Text('Take your travel'),
+          padding: EdgeInsets.all(8.00),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Card(
+                elevation: 5.00,
+                child: Container(
+                  height: 150.00,
+                  color: Colors.blue,
+                  child: Stack(),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
