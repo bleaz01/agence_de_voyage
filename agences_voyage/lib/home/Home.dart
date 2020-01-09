@@ -1,7 +1,6 @@
-import 'package:agences_voyage/city_card.dart';
 import 'package:flutter/material.dart';
 
-import 'city_card.dart';
+import './widget/city_card.dart';
 
 class Home extends StatefulWidget {
   //--------------------------------------------//
