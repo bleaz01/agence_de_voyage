@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 
 class CartCity extends StatelessWidget {
+  final String name;
+  final String image;
+  final bool checked;
+  final Function updateChecked;
+
+  CartCity({this.name, this.image, this.checked, this.updateChecked});
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -10,7 +17,13 @@ class CartCity extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
-            Image.asset('assets/images/paris.jpg', fit: BoxFit.cover),
+            Ink.image(
+              fit: BoxFit.cover,
+              image: AssetImage(
+                image,
+              ),
+              child: InkWell(onTap: updateChecked),
+            ),
             Padding(
               padding: EdgeInsets.all(10.00),
               child: Column(
@@ -20,13 +33,14 @@ class CartCity extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Icon(Icons.star_border, size: 30, color: Colors.white),
+                        Icon(checked == true ? Icons.star : Icons.star_border,
+                            size: 30, color: Colors.white),
                       ],
                     ),
                   ),
                   Row(
                     children: <Widget>[
-                      Text('Paris, France',
+                      Text(name,
                           style:
                               TextStyle(color: Colors.white, fontSize: 30.00))
                     ],
