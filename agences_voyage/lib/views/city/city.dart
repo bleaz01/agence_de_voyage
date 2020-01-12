@@ -1,7 +1,11 @@
+import 'package:agences_voyage/views/city/widgets/trip_activity_list.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
+import 'widgets/activity_list.dart';
+import 'widgets/trip_overview.dart';
+import '../city/widgets/trip_overview.dart';
+
 import '../../models/activity.model.dart';
-import '../city/widgets/activity_card.dart';
 import '../../datas/data.dart' as data;
 import '../../datas/trip.dart';
 
@@ -14,6 +18,8 @@ class City extends StatefulWidget {
 
 class _CityState extends State<City> {
   Trip mytrip = Trip(activities: [], city: 'paris', date: DateTime.now());
+
+  var index = 0;
 
   void setDate() {
     showDatePicker(
@@ -33,64 +39,51 @@ class _CityState extends State<City> {
     });
   }
 
+  void switchIndex(newIndex) {
+    setState(() {
+      index = newIndex;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: Icon(
-            Icons.keyboard_backspace,
-          ),
-          title: Text('Paris'),
-          actions: <Widget>[Icon(Icons.keyboard_return)],
+      appBar: AppBar(
+        leading: Icon(
+          Icons.keyboard_backspace,
         ),
-        body: Container(
-            child: Column(
+        title: Text('Organisation du voyage'),
+        actions: <Widget>[Icon(Icons.keyboard_return)],
+      ),
+      body: Container(
+        child: Column(
           children: <Widget>[
-            Container(
-                padding: EdgeInsets.all(10),
-                height: 200,
-                color: Colors.white,
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                            child:
-                                Text(DateFormat("d/M/y").format(mytrip.date))),
-                        //DateFormat vient d'un package externe intl qui nous permet de convertire entre autre les date (Datetime)
-                        RaisedButton(
-                            child: Text('Slectionner une date'),
-                            onPressed: () {
-                              setDate();
-                            })
-                      ],
-                    )
-                  ],
-                )),
+            Overview(
+              mytrip: mytrip,
+              setDate: setDate,
+            ),
             Expanded(
-              //Expanded est obligator lors de l utilisation de GridView ou listeView si non bug car il prend tous l'espace
-              child: GridView.count(
-                crossAxisCount: 2,
-                //crossAxisCount un instipensable car il nous permet de dire combiens d'element sur l'axe y et x
-                children: widget.activities
-                    .map(
-                      (activity) => (ActivityCard(
-                        activity: activity,
-                      )),
-                    )
-                    .toList(),
-              ),
-            )
+                //Expanded est obligator lors de l utilisation de GridView ou listeView si non bug car il prend tous l'espace
+                child: index == 0
+                    ? ActivityList(list: widget.activities)
+                    : TripActivityList())
           ],
-        ))
-        // child: ListView.builder(
-        //   // ListView permet de lister plusier data mais quand ils y a une multitude de data
-        //   //on utilise ListView.builder car pour la chargement des datas c 'est plus optimal
-        //   itemBuilder: (context, index) {
-        //     return ActivityCard(activity: widget.activities[index]);
-        //   },
-        //   itemCount: widget.activities
-        //       .length, //widget nous permets de recuperé des donné dans la StateFullwidget(le parent)
-        );
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: index, //currentIndex sert a avoir un index par default
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.map),
+            title: Text('decouverte'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.star),
+            title: Text('Mes activités'),
+          ),
+        ],
+        onTap: switchIndex,
+      ),
+    );
   }
 }
