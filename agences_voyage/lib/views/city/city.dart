@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../../models/activity.model.dart';
 import '../city/widgets/activity_card.dart';
 import '../../datas/data.dart' as data;
@@ -12,7 +13,25 @@ class City extends StatefulWidget {
 }
 
 class _CityState extends State<City> {
-  Trip mytrip = Trip(activities: [], city: 'paris');
+  Trip mytrip = Trip(activities: [], city: 'paris', date: DateTime.now());
+
+  void setDate() {
+    showDatePicker(
+            // future pour rechercher un calandrier
+            context: context,
+            initialDate: DateTime.now().add(Duration(
+                days:
+                    1)), // .add(Duration(day:1)) == a la date now plus 1 jours
+            firstDate: DateTime.now(),
+            lastDate: DateTime(2021))
+        .then((newDate) {
+      if (newDate != null) {
+        setState(() {
+          mytrip.date = newDate;
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +54,15 @@ class _CityState extends State<City> {
                   children: <Widget>[
                     Row(
                       children: <Widget>[
-                        Expanded(child: Text('Choissisez la date')),
+                        Expanded(
+                            child:
+                                Text(DateFormat("d/M/y").format(mytrip.date))),
+                        //DateFormat vient d'un package externe intl qui nous permet de convertire entre autre les date (Datetime)
                         RaisedButton(
-                          child: Text('Slectionner une date'),
-                          onPressed: () {},
-                        )
+                            child: Text('Slectionner une date'),
+                            onPressed: () {
+                              setDate();
+                            })
                       ],
                     )
                   ],

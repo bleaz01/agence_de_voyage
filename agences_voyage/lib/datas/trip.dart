@@ -3,5 +3,9 @@ class Trip {
   List<String> activities;
   DateTime date;
 
-  Trip({this.city, this.activities, this.date});
+  Trip({
+    this.city,
+    this.activities,
+    this.date,
+  });
 }
