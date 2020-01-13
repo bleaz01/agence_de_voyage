@@ -17,9 +17,16 @@ class City extends StatefulWidget {
 }
 
 class _CityState extends State<City> {
-  Trip mytrip = Trip(activities: [], city: 'paris', date: DateTime.now());
+  Trip mytrip;
 
-  var index = 0;
+  var index;
+
+  @override
+  void initState() {
+    super.initState();
+    mytrip = Trip(activities: [], city: 'paris', date: null);
+    index = 0;
+  }
 
   void setDate() {
     showDatePicker(
@@ -45,6 +52,16 @@ class _CityState extends State<City> {
     });
   }
 
+  void toogleActivities(String id) {
+    // .containes sert a iteré sur une liste pour trouvé un elements dans la list
+    //donc on lui dit que si il trouve l'id il la remove sinon il la add
+    setState(() {
+      mytrip.activities.contains(id)
+          ? mytrip.activities.remove(id)
+          : mytrip.activities.add(id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +82,10 @@ class _CityState extends State<City> {
             Expanded(
                 //Expanded est obligator lors de l utilisation de GridView ou listeView si non bug car il prend tous l'espace
                 child: index == 0
-                    ? ActivityList(list: widget.activities)
+                    ? ActivityList(
+                        list: widget.activities,
+                        toogleActivities: toogleActivities,
+                        selectedActivities: mytrip.activities)
                     : TripActivityList())
           ],
         ),

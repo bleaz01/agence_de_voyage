@@ -31,7 +31,11 @@ class Overview extends StatelessWidget {
           ),
           Row(
             children: <Widget>[
-              Expanded(child: Text(DateFormat("d/M/y").format(mytrip.date))),
+              Expanded(
+                child: Text(mytrip.date != null
+                    ? DateFormat("d/M/y").format(mytrip.date)
+                    : 'choisissez une date'),
+              ),
               //DateFormat vient d'un package externe intl qui nous permet de convertire entre autre les date (Datetime)
               RaisedButton(
                   child: Text('Slectionner une date'), onPressed: setDate)

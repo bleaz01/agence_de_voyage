@@ -5,8 +5,10 @@ import 'activity_card.dart';
 
 class ActivityList extends StatelessWidget {
   final List<Activity> list;
+  final Function toogleActivities;
+  final List<String> selectedActivities;
 
-  ActivityList({this.list});
+  ActivityList({this.list, this.selectedActivities, this.toogleActivities});
   @override
   Widget build(BuildContext context) {
     return GridView.count(
@@ -15,8 +17,11 @@ class ActivityList extends StatelessWidget {
       children: list
           .map(
             (activity) => (ActivityCard(
-              activity: activity,
-            )),
+                activity: activity,
+                isSelected: selectedActivities.contains(activity.id),
+                toogleActivities: () {
+                  toogleActivities(activity.id);
+                })),
           )
           .toList(),
     );
