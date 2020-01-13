@@ -3,6 +3,7 @@ class Activity {
   String city;
   String image;
   String id;
+  double prix;
 
-  Activity({this.city, this.id, this.image, this.name});
+  Activity({this.city, this.id, this.image, this.name, this.prix});
 }

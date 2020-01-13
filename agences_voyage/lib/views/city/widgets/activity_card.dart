@@ -41,8 +41,18 @@ class ActivityCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
-                        Text(activity.name,
-                            style: TextStyle(color: Colors.white))
+                        Flexible(
+                          child: Text(
+                            activity.name,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        Flexible(
+                          child: Text(
+                            '${activity.prix}eur',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        )
                       ],
                     )
                   ],

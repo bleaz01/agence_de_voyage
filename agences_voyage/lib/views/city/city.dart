@@ -28,6 +28,12 @@ class _CityState extends State<City> {
     index = 0;
   }
 
+  List<Activity> get myActivities {
+    return widget.activities
+        .where((activity) => mytrip.activities.contains(activity.id))
+        .toList();
+  }
+
   void setDate() {
     showDatePicker(
             // future pour rechercher un calandrier
@@ -86,7 +92,9 @@ class _CityState extends State<City> {
                         list: widget.activities,
                         toogleActivities: toogleActivities,
                         selectedActivities: mytrip.activities)
-                    : TripActivityList())
+                    : TripActivityList(
+                        activities: myActivities,
+                      ))
           ],
         ),
       ),
