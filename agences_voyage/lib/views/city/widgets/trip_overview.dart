@@ -5,18 +5,23 @@ import '../../../datas/trip.dart';
 class Overview extends StatelessWidget {
   final Function setDate;
   final Trip mytrip;
+  final double price;
 
+  Overview({this.setDate, this.mytrip, this.price});
   double get amount {
     return 0;
   }
 
-  Overview({this.setDate, this.mytrip});
-
   @override
   Widget build(BuildContext context) {
+    final orientation = MediaQuery.of(context).orientation;
+    final size = MediaQuery.of(context).size;
+
     return Container(
       padding: EdgeInsets.all(10),
       height: 200,
+      width:
+          orientation == Orientation.landscape ? size.width * 0.5 : size.width,
       color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

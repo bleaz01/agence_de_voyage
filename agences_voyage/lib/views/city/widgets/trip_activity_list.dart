@@ -3,8 +3,9 @@ import '../../../models/activity.model.dart';
 
 class TripActivityList extends StatelessWidget {
   final List<Activity> activities;
+  final Function delete;
 
-  TripActivityList({this.activities});
+  TripActivityList({this.activities, this.delete});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,11 @@ class TripActivityList extends StatelessWidget {
             ),
             title: Text(activity.name),
             subtitle: Text(activity.city),
-            trailing: Icon(Icons.delete),
+            trailing: IconButton(
+                icon: Icon(Icons.delete, color: Colors.blue),
+                onPressed: () {
+                  delete(activity.id);
+                }),
           ),
         );
       },

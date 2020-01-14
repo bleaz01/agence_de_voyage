@@ -1,16 +1,30 @@
 import 'package:agences_voyage/views/city/widgets/trip_activity_list.dart';
 import 'package:flutter/material.dart';
 
+import '../../widget/data.dart';
 import 'widgets/activity_list.dart';
 import 'widgets/trip_overview.dart';
 import '../city/widgets/trip_overview.dart';
 
 import '../../models/activity.model.dart';
-import '../../datas/data.dart' as data;
 import '../../datas/trip.dart';
 
 class City extends StatefulWidget {
-  final List<Activity> activities = data.activities;
+  showMyOrentation({context, List<Widget> children}) {
+    final orientation = MediaQuery.of(context)
+        .orientation; //sa nous permet de controler la view horizontal et vertical du gsm
+
+    if (orientation == Orientation.landscape) {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: children,
+      );
+    } else {
+      return Column(
+        children: children,
+      );
+    }
+  }
 
   @override
   _CityState createState() => _CityState();
@@ -18,6 +32,7 @@ class City extends StatefulWidget {
 
 class _CityState extends State<City> {
   Trip mytrip;
+  List<Activity> activities;
 
   var index;
 
@@ -29,14 +44,14 @@ class _CityState extends State<City> {
   }
 
   List<Activity> get myActivities {
-    return widget.activities
+    return activities
         .where((activity) => mytrip.activities.contains(activity.id))
         .toList();
   }
 
   void setDate() {
     showDatePicker(
-            // future pour rechercher un calandrier
+            // future pour charger un calandrier
             context: context,
             initialDate: DateTime.now().add(Duration(
                 days:
@@ -68,6 +83,20 @@ class _CityState extends State<City> {
     });
   }
 
+  void deleteActivity(String id) {
+    setState(() {
+      mytrip.activities.remove(id);
+    });
+  }
+
+  @override
+  didChangeDependencies() {
+    super.didChangeDependencies();
+    activities = Data.of(context)
+        .activities; // ici nous recuperons nos data facilement grace
+    // ou Inheritewidget dans notre fichier widget/data.dart
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,7 +108,8 @@ class _CityState extends State<City> {
         actions: <Widget>[Icon(Icons.keyboard_return)],
       ),
       body: Container(
-        child: Column(
+        child: widget.showMyOrentation(
+          context: context,
           children: <Widget>[
             Overview(
               mytrip: mytrip,
@@ -89,11 +119,12 @@ class _CityState extends State<City> {
                 //Expanded est obligator lors de l utilisation de GridView ou listeView si non bug car il prend tous l'espace
                 child: index == 0
                     ? ActivityList(
-                        list: widget.activities,
+                        list: activities,
                         toogleActivities: toogleActivities,
                         selectedActivities: mytrip.activities)
                     : TripActivityList(
                         activities: myActivities,
+                        delete: deleteActivity,
                       ))
           ],
         ),
