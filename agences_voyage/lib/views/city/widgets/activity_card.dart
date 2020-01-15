@@ -13,7 +13,7 @@ class ActivityCard extends StatelessWidget {
     return Container(
         margin: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
         width: double
-            .infinity, // double.infinty permet que le container prenne tout espace disponible
+            .infinity, // double.infinty permets que le container prenne tout espace disponible
 
         child: Stack(
           children: <Widget>[

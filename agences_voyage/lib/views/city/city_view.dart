@@ -10,9 +10,8 @@ import '../../models/activity.model.dart';
 import '../../datas/trip.dart';
 
 class City extends StatefulWidget {
-  showMyOrentation({context, List<Widget> children}) {
-    final orientation = MediaQuery.of(context)
-        .orientation; //sa nous permet de controler la view horizontal et vertical du gsm
+  showContext({context, List<Widget> children}) {
+    final orientation = MediaQuery.of(context).orientation;
 
     if (orientation == Orientation.landscape) {
       return Row(
@@ -31,6 +30,9 @@ class City extends StatefulWidget {
 }
 
 class _CityState extends State<City> {
+  // with WidgetsBindingObserver {
+  // WidgetsBindingObserver sert a savoir l'etap du gsm
+  // etat = fermer, en background, etc ..
   Trip mytrip;
   List<Activity> activities;
 
@@ -39,6 +41,10 @@ class _CityState extends State<City> {
   @override
   void initState() {
     super.initState();
+    // WidgetsBinding.instance.addObserver(
+    //     this); // WidgetsBinding nous permet de sauvegarder notre widget
+    // dans l'engine interne de flutter. (this) = ensemble du widget
+
     mytrip = Trip(activities: [], city: 'paris', date: null);
     index = 0;
   }
@@ -48,6 +54,14 @@ class _CityState extends State<City> {
         .where((activity) => mytrip.activities.contains(activity.id))
         .toList();
   }
+
+  // @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) {
+  //   // AppLifecycleState nous permet de savoir l'etas de notre Gsm
+  //   super.didChangeAppLifecycleState(
+  //       state); // Rappel etas = pause, inactive, fermer, background
+  //   print(this);
+  // }
 
   void setDate() {
     showDatePicker(
@@ -74,9 +88,8 @@ class _CityState extends State<City> {
   }
 
   void toogleActivities(String id) {
-    // .containes sert a iteré sur une liste pour trouvé un elements dans la list
-    //donc on lui dit que si il trouve l'id il la remove sinon il la add
     setState(() {
+      // contains sert a iteré sur une liste pour y trouvé un éléments préci
       mytrip.activities.contains(id)
           ? mytrip.activities.remove(id)
           : mytrip.activities.add(id);
@@ -93,8 +106,15 @@ class _CityState extends State<City> {
   didChangeDependencies() {
     super.didChangeDependencies();
     activities = Data.of(context)
-        .activities; // ici nous recuperons nos data facilement grace
-    // ou Inheritewidget dans notre fichier widget/data.dart
+        .activities; // ici nous récuperons nos data facilement grace Inheritewidget dans notre fichier widget/data.dart
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    // WidgetsBinding.instance.removeObserver(
+    //     this); // nous permet de suprimer l'observateur quand il sert a rien
+    // IMPORTANT toujour le couper
   }
 
   @override
@@ -108,7 +128,7 @@ class _CityState extends State<City> {
         actions: <Widget>[Icon(Icons.keyboard_return)],
       ),
       body: Container(
-        child: widget.showMyOrentation(
+        child: widget.showContext(
           context: context,
           children: <Widget>[
             Overview(
@@ -116,7 +136,7 @@ class _CityState extends State<City> {
               setDate: setDate,
             ),
             Expanded(
-                //Expanded est obligator lors de l utilisation de GridView ou listeView si non bug car il prend tous l'espace
+                //Expanded est obligatoire lors de l'utilisation de GridView ou listeView  "BUG" car il prend tout l'espace
                 child: index == 0
                     ? ActivityList(
                         list: activities,
@@ -130,7 +150,7 @@ class _CityState extends State<City> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: index, //currentIndex sert a avoir un index par default
+        currentIndex: index, //currentIndex sert à avoir un index par default
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.map),

@@ -1,56 +1,33 @@
 import 'package:flutter/material.dart';
+import '../../../models/city_model.dart';
 
 class CartCity extends StatelessWidget {
-  final String name;
-  final String image;
-  final bool checked;
-  final Function updateChecked;
+  final City city;
 
-  CartCity({this.name, this.image, this.checked, this.updateChecked});
+  CartCity({this.city});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 5.00,
       child: Container(
-        height: 160.00,
-        child: Stack(
-          fit: StackFit.expand,
-          children: <Widget>[
-            Ink.image(
-              fit: BoxFit.cover,
-              image: AssetImage(
-                image,
+          height: 160.00,
+          child: Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              Ink.image(
+                fit: BoxFit.cover,
+                image: AssetImage(
+                  city.image,
+                ),
+                child: InkWell(onTap: () {}),
               ),
-              child: InkWell(onTap: updateChecked),
-            ),
-            Padding(
-              padding: EdgeInsets.all(10.00),
-              child: Column(
-                children: <Widget>[
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Icon(checked == true ? Icons.star : Icons.star_border,
-                            size: 30, color: Colors.white),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Text(name,
-                          style:
-                              TextStyle(color: Colors.white, fontSize: 30.00))
-                    ],
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
+              Positioned(
+                  top: 10,
+                  left: 10,
+                  child: Text(city.name, style: TextStyle(color: Colors.white)))
+            ],
+          )),
     );
   }
 }

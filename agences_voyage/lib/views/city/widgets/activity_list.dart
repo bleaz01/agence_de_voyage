@@ -13,7 +13,7 @@ class ActivityList extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.count(
       crossAxisCount: 2,
-      //crossAxisCount un instipensable car il nous permet de dire combiens d'element sur l'axe y et x
+      //crossAxisCount un indispensable car il nous permet dire combien d'element sur l'axe x
       children: list
           .map(
             (activity) => (ActivityCard(

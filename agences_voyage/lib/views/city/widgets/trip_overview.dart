@@ -41,7 +41,7 @@ class Overview extends StatelessWidget {
                     ? DateFormat("d/M/y").format(mytrip.date)
                     : 'choisissez une date'),
               ),
-              //DateFormat vient d'un package externe intl qui nous permet de convertire entre autre les date (Datetime)
+              //DateFormat vient d'un package externe 'intl' qui nous permets de convertire entre autre les dates (Datetime)
               RaisedButton(
                   child: Text('Slectionner une date'), onPressed: setDate)
             ],
