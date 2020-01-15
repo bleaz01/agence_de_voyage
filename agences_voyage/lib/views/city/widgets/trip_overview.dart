@@ -9,6 +9,7 @@ class Overview extends StatelessWidget {
   final String cityName;
 
   Overview({this.setDate, this.mytrip, this.price, this.cityName});
+
   double get amount {
     return 0;
   }
@@ -28,9 +29,10 @@ class Overview extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'Paris',
-            style:
-                TextStyle(fontSize: 30, decoration: TextDecoration.underline),
+            cityName,
+            style: TextStyle(
+              fontSize: 30,
+            ),
           ),
           SizedBox(
             height: 30,

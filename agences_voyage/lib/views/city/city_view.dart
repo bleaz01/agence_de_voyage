@@ -9,8 +9,11 @@ import '../city/widgets/trip_overview.dart';
 import '../../models/activity.model.dart';
 import '../../models/city_model.dart';
 import '../../datas/trip.dart';
+import '../../datas/data.dart' as data;
 
 class CityView extends StatefulWidget {
+  final List<Activity> activities = data.activities;
+
   showContext({context, List<Widget> children}) {
     final orientation = MediaQuery.of(context).orientation;
 
@@ -35,7 +38,6 @@ class _CityState extends State<CityView> {
   // WidgetsBindingObserver sert a savoir l'etap du gsm
   // etat = fermer, en background, etc ..
   Trip mytrip;
-  List<Activity> activities;
 
   var index;
 
@@ -51,7 +53,7 @@ class _CityState extends State<CityView> {
   }
 
   List<Activity> get myActivities {
-    return activities
+    return widget.activities
         .where((activity) => mytrip.activities.contains(activity.id))
         .toList();
   }
@@ -103,12 +105,12 @@ class _CityState extends State<CityView> {
     });
   }
 
-  @override
-  didChangeDependencies() {
-    super.didChangeDependencies();
-    activities = Data.of(context)
-        .activities; // ici nous récuperons nos data facilement grace Inheritewidget dans notre fichier widget/data.dart
-  }
+  // @override
+  // didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   activities = Data.of(context)
+  //       .activities; // ici nous récuperons nos data facilement grace Inheritewidget dans notre fichier widget/data.dart
+  // }
 
   @override
   void dispose() {
@@ -123,6 +125,7 @@ class _CityState extends State<CityView> {
     final City city = ModalRoute.of(context)
         .settings
         .arguments; // settings regroupe tout les proprité de la route
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -142,7 +145,7 @@ class _CityState extends State<CityView> {
           context: context,
           children: <Widget>[
             Overview(
-              // cityName: city,  (BUG à corriger + les partages des donnés)
+              cityName: city.name,
               mytrip: mytrip,
               setDate: setDate,
             ),
@@ -150,7 +153,7 @@ class _CityState extends State<CityView> {
                 //Expanded est obligatoire lors de l'utilisation de GridView ou listeView  "BUG" car il prend tout l'espace
                 child: index == 0
                     ? ActivityList(
-                        list: activities,
+                        list: widget.activities,
                         toogleActivities: toogleActivities,
                         selectedActivities: mytrip.activities)
                     : TripActivityList(
