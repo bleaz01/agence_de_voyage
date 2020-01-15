@@ -1,15 +1,16 @@
-import 'package:agences_voyage/views/city/widgets/trip_activity_list.dart';
 import 'package:flutter/material.dart';
 
 import '../../widget/data.dart';
+import '../city/widgets/trip_activity_list.dart';
 import 'widgets/activity_list.dart';
 import 'widgets/trip_overview.dart';
 import '../city/widgets/trip_overview.dart';
 
 import '../../models/activity.model.dart';
+import '../../models/city_model.dart';
 import '../../datas/trip.dart';
 
-class City extends StatefulWidget {
+class CityView extends StatefulWidget {
   showContext({context, List<Widget> children}) {
     final orientation = MediaQuery.of(context).orientation;
 
@@ -29,7 +30,7 @@ class City extends StatefulWidget {
   _CityState createState() => _CityState();
 }
 
-class _CityState extends State<City> {
+class _CityState extends State<CityView> {
   // with WidgetsBindingObserver {
   // WidgetsBindingObserver sert a savoir l'etap du gsm
   // etat = fermer, en background, etc ..
@@ -57,15 +58,15 @@ class _CityState extends State<City> {
 
   // @override
   // void didChangeAppLifecycleState(AppLifecycleState state) {
-  //   // AppLifecycleState nous permet de savoir l'etas de notre Gsm
+  //   // AppLifecycleState nous permets de savoir l'état de notre GSM
   //   super.didChangeAppLifecycleState(
-  //       state); // Rappel etas = pause, inactive, fermer, background
+  //       state); // Rappel état = pause, inactive, fermer, background
   //   print(this);
   // }
 
   void setDate() {
     showDatePicker(
-            // future pour charger un calandrier
+            // showDatePicker est une future pour un calandrier
             context: context,
             initialDate: DateTime.now().add(Duration(
                 days:
@@ -113,16 +114,25 @@ class _CityState extends State<City> {
   void dispose() {
     super.dispose();
     // WidgetsBinding.instance.removeObserver(
-    //     this); // nous permet de suprimer l'observateur quand il sert a rien
+    //     this); // nous permets de suprimer l'observateur quand il sert a rien
     // IMPORTANT toujour le couper
   }
 
   @override
   Widget build(BuildContext context) {
+    final City city = ModalRoute.of(context)
+        .settings
+        .arguments; // settings regroupe tout les proprité de la route
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(
-          Icons.keyboard_backspace,
+        leading: IconButton(
+          icon: Icon(
+            Icons.keyboard_backspace,
+          ),
+          onPressed: () {
+            Navigator.pop(
+                context); // Navigator.pop(context) retire de la stack ensemble du widget(context), donc créer un retour au widget en dessous
+          },
         ),
         title: Text('Organisation du voyage'),
         actions: <Widget>[Icon(Icons.keyboard_return)],
@@ -132,6 +142,7 @@ class _CityState extends State<City> {
           context: context,
           children: <Widget>[
             Overview(
+              // cityName: city,  (BUG à corriger + les partages des donnés)
               mytrip: mytrip,
               setDate: setDate,
             ),
@@ -150,7 +161,8 @@ class _CityState extends State<City> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: index, //currentIndex sert à avoir un index par default
+        currentIndex:
+            index, //currentIndex nous sert à avoir un index par défaut
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.map),

@@ -1,5 +1,7 @@
+import '../../../widget/data.dart';
 import 'package:flutter/material.dart';
 import '../../../models/city_model.dart';
+import '../../city/city_view.dart';
 
 class CartCity extends StatelessWidget {
   final City city;
@@ -20,7 +22,16 @@ class CartCity extends StatelessWidget {
                 image: AssetImage(
                   city.image,
                 ),
-                child: InkWell(onTap: () {}),
+                child: InkWell(onTap: () {
+                  Navigator.pushNamed(context, '/city', arguments: city);
+                  // Navigator.push(
+                  //   //Navigator.push nous permets de rajouté un widget sur la stack(autre widget)
+                  //   context, //la navigation dois avoir le context pour savoir qu'elle widget et visible par l'utilisateur(widget le plus haut de la stack)
+                  //   MaterialPageRoute(builder: (context) {
+                  //     //MaterialPageRoute nous permets de faire une transition entre les routes
+                  //     return Data(child: CityView());
+                  //   }),
+                }),
               ),
               Positioned(
                   top: 10,

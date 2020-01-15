@@ -6,8 +6,9 @@ class Overview extends StatelessWidget {
   final Function setDate;
   final Trip mytrip;
   final double price;
+  final String cityName;
 
-  Overview({this.setDate, this.mytrip, this.price});
+  Overview({this.setDate, this.mytrip, this.price, this.cityName});
   double get amount {
     return 0;
   }
