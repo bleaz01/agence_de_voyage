@@ -12,7 +12,7 @@
 
 ### Description
 
-Ce projet consiste a aprrendre Flutter et tout ces fonctionabilités via Dyma qui est un cite payent pour apprendre de nombreux langage dans le cadre de la former pour trouver un stage dans le domaine des App Mobile.
+Ce projet consiste à apprendre Flutter et toutes ces fonctionabilités via Dyma, qui est un site payant pour apprendre de nombreux langages. Dans le but de me former pour trouver un stage voir un emploie dans le domaine des App Mobile.
 
 ### Mock-up
 
