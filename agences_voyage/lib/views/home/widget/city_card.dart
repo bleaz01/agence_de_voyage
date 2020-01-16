@@ -23,7 +23,8 @@ class CartCity extends StatelessWidget {
                   city.image,
                 ),
                 child: InkWell(onTap: () {
-                  Navigator.pushNamed(context, '/city', arguments: city);
+                  Navigator.pushNamed(context, CityView.routName,
+                      arguments: city);
                   // Navigator.push(
                   //   //Navigator.push nous permets de rajouté un widget sur la stack(autre widget)
                   //   context, //la navigation dois avoir le context pour savoir qu'elle widget et visible par l'utilisateur(widget le plus haut de la stack)

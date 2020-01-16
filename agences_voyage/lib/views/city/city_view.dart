@@ -13,6 +13,7 @@ import '../../datas/data.dart' as data;
 
 class CityView extends StatefulWidget {
   final List<Activity> activities = data.activities;
+  static String routName = '/city';
 
   showContext({context, List<Widget> children}) {
     final orientation = MediaQuery.of(context).orientation;
@@ -50,6 +51,14 @@ class _CityState extends State<CityView> {
 
     mytrip = Trip(activities: [], city: 'paris', date: null);
     index = 0;
+  }
+
+  double get amount {
+    return mytrip.activities.fold(0.00, (pres, element) {
+      var activity = widget.activities
+          .firstWhere((activities) => activities.id == element);
+      return pres + activity.prix;
+    });
   }
 
   List<Activity> get myActivities {
@@ -122,7 +131,8 @@ class _CityState extends State<CityView> {
 
   @override
   Widget build(BuildContext context) {
-    final City city = ModalRoute.of(context)
+    final City city = ModalRoute.of(
+            context) //ModalRout.of(context) nous permets de récuprer les donnés dans le widget de déstination
         .settings
         .arguments; // settings regroupe tout les proprité de la route
 
@@ -145,10 +155,10 @@ class _CityState extends State<CityView> {
           context: context,
           children: <Widget>[
             Overview(
-              cityName: city.name,
-              mytrip: mytrip,
-              setDate: setDate,
-            ),
+                cityName: city.name,
+                mytrip: mytrip,
+                setDate: setDate,
+                amount: amount),
             Expanded(
                 //Expanded est obligatoire lors de l'utilisation de GridView ou listeView  "BUG" car il prend tout l'espace
                 child: index == 0

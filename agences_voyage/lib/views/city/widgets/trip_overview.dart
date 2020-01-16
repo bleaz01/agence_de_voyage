@@ -5,14 +5,10 @@ import '../../../datas/trip.dart';
 class Overview extends StatelessWidget {
   final Function setDate;
   final Trip mytrip;
-  final double price;
   final String cityName;
+  final double amount;
 
-  Overview({this.setDate, this.mytrip, this.price, this.cityName});
-
-  double get amount {
-    return 0;
-  }
+  Overview({this.setDate, this.mytrip, this.amount, this.cityName});
 
   @override
   Widget build(BuildContext context) {
@@ -55,10 +51,17 @@ class Overview extends StatelessWidget {
           Row(
             children: <Widget>[
               Expanded(
-                  child: Text('Montant / personne',
-                      style: TextStyle(fontSize: 20))),
-              Text('$amount',
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                child: Text(
+                  'Montant / personne',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+              Container(
+                child: Text(
+                  '$amount EURO',
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                ),
+              ),
             ],
           )
         ],

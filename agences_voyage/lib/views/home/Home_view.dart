@@ -4,21 +4,23 @@ import './widget/city_card.dart';
 import '../../models/city_model.dart';
 
 class Home extends StatefulWidget {
-  //--------------------------------------------//
-  //  Datas non modifiable car widget sans étas //
-  //--------------------------------------------//
+  static String routName = '/';
+  //-----------------------------------------------------//
+  //  Datas non modifiable car c'est un widget sans étas //
+  //  donct ont utilisent  final <type> variable         //
+  //-----------------------------------------------------//
 
-  // statefultwidget nous permet de rebuilt la class enfant _HomeState
+  // statefultwidget nous permets de rebuilt la class enfant _HomeState
   @override
   _HomeState createState() {
-    //createState permet la creation de la class _HomeState mais aussi le rebuild de cet class et cest widget
+    //createState permet la creation de la class _HomeState mais aussi le rebuild de cet class et ces widget
     return _HomeState();
   }
 }
 
 class _HomeState extends State<Home> {
   // _HomeState herite de la class Home donc doit etre typé = <Home>
-  // le _ suive du nom de la class nous permet de la rente privé car cet classe dois etre utilisé que dans ce fichier.
+  // le _ suive du nom de la class nous permets de la rente privé car cet classe dois etre utilisé que dans ce fichier.
 
   //---------------------------//
   //    Datas modifiable       //

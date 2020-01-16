@@ -24,10 +24,11 @@ class MyApp extends StatelessWidget {
       ),
       //home: Home(),  soit ou une route par défaut qui est '/' car sinon 'BUG'  et le / et une convention Flutter
       routes: {
-        '/': (context) {
-          return Home();
-        },
-        '/city': (context) {
+        Home.routName: (context) {
+          //Home.route est une autre methode pour géré nos route et qui est la plus conforme
+          return Home(); //car on crée une variable static dans le widget de la vue qui prend la valeur de '/'
+        }, // et sa evite les erreur de typo
+        CityView.routName: (context) {
           return CityView();
         }
       },
