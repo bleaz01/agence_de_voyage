@@ -1,7 +1,10 @@
+import 'package:agences_voyage/views/city/city_view.dart';
+import 'package:agences_voyage/views/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 
 import './widget/city_card.dart';
 import '../../models/city_model.dart';
+import '../widgets/drawer.dart';
 
 class Home extends StatefulWidget {
   static String routName = '/';
@@ -44,10 +47,10 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: Icon(Icons.home),
           title: Text('Travel & Dream'),
           actions: <Widget>[Icon(Icons.more_horiz)],
         ),
+        drawer: MyDrawer(),
         body: ListView.builder(
           itemBuilder: (context, index) {
             return Container(

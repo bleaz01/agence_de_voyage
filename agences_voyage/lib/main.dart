@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
           false, // debugShowCheckedModeBanner:  la banier de debug
       title: 'voyages',
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.red,
         appBarTheme: AppBarTheme(
           textTheme: ThemeData.light().textTheme.copyWith(
                 title: TextStyle(

@@ -1,9 +1,10 @@
+import 'package:agences_voyage/views/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 
-import '../../widget/data.dart';
 import '../city/widgets/trip_activity_list.dart';
 import 'widgets/activity_list.dart';
 import 'widgets/trip_overview.dart';
+import '../home/Home_view.dart';
 import '../city/widgets/trip_overview.dart';
 
 import '../../models/activity.model.dart';
@@ -53,6 +54,10 @@ class _CityState extends State<CityView> {
     index = 0;
   }
 
+// fold est une methode Dart qui nous permets de parcourir
+// une list et addisionné les element premiere argument est
+// la valeur,appelée accumulateur la deuxième est la function
+// a utiliser pour mettre à jour la valeur de l'accumulateu
   double get amount {
     return mytrip.activities.fold(0.00, (pres, element) {
       var activity = widget.activities
@@ -74,6 +79,44 @@ class _CityState extends State<CityView> {
   //       state); // Rappel état = pause, inactive, fermer, background
   //   print(this);
   // }
+  void saveTrip() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return SimpleDialog(
+          title: Text('Trip sauvegarder...?'),
+          contentPadding: EdgeInsets.all(20),
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                RaisedButton(
+                  child: Text(
+                    'oui',
+                  ),
+                  onPressed: () => {
+                    Navigator.pop(context,
+                        'oui'), // Navigator.pop va retiré de la stack la showDialog et on va retenir dans context la valeur
+                  },
+                  color: Theme.of(context).primaryColorDark,
+                ),
+                SizedBox(width: 30),
+                RaisedButton(
+                  child: Text('non'),
+                  onPressed: () => {
+                    Navigator.pop(context, 'non'),
+                  },
+                )
+              ],
+            )
+          ],
+        );
+      },
+    ).then((result) {
+      //récupération de la valeur grâce au context de showDialog
+      Navigator.pushNamed(context, Home.routName);
+    });
+  }
 
   void setDate() {
     showDatePicker(
@@ -138,18 +181,18 @@ class _CityState extends State<CityView> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(
-            Icons.keyboard_backspace,
-          ),
-          onPressed: () {
-            Navigator.pop(
-                context); // Navigator.pop(context) retire de la stack ensemble du widget(context), donc créer un retour au widget en dessous
-          },
-        ),
+        // leading: IconButton(
+        //   icon: Icon(
+        //     Icons.keyboard_backspace,
+        //   ),
+        //   onPressed: () {
+        //     Navigator.pop(
+        //         context); // Navigator.pop(context) retire de la stack ensemble du widget(context), donc créer un retour au widget en dessous
+        //   },
+        // ),
         title: Text('Organisation du voyage'),
-        actions: <Widget>[Icon(Icons.keyboard_return)],
       ),
+      drawer: MyDrawer(),
       body: Container(
         child: widget.showContext(
           context: context,
@@ -172,6 +215,10 @@ class _CityState extends State<CityView> {
                       ))
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: saveTrip,
+        child: Icon(Icons.forward),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex:

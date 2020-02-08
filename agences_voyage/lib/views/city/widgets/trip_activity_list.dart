@@ -24,6 +24,13 @@ class TripActivityList extends StatelessWidget {
                 icon: Icon(Icons.delete, color: Colors.blue),
                 onPressed: () {
                   delete(activity.id);
+                  // SnackBar a besoin d'un context dans on va utiliser un Scaffold que lui va récupérer le context
+                  // showSnackBar est une petite barre qui pop en bas de l'écran pour prévenir a l'utilisateur qu'il y a eu un changement
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text('Activité supprimée'),
+                    backgroundColor: Colors.red,
+                    duration: Duration(seconds: 2),
+                  ));
                 }),
           ),
         );
