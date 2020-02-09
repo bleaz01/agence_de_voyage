@@ -1,7 +1,9 @@
+import 'package:agences_voyage/views/trips/trips_view.dart';
 import 'package:flutter/material.dart';
 
 import './views/home/Home_view.dart';
 import './views/city/city_view.dart';
+import './views/trips/trips_view.dart';
 
 void main() => runApp(MyApp());
 
@@ -30,6 +32,9 @@ class MyApp extends StatelessWidget {
         }, // et sa evite les erreur de typo
         CityView.routName: (context) {
           return CityView();
+        },
+        TripsView.routeName: (context) {
+          return TripsView();
         }
       },
     );

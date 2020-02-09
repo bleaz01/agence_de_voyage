@@ -1,3 +1,4 @@
+import 'package:agences_voyage/views/trips/trips_view.dart';
 import 'package:flutter/material.dart';
 import '../home/Home_view.dart';
 
@@ -40,7 +41,7 @@ class MyDrawer extends StatelessWidget {
             leading: Icon(Icons.flight),
             title: Text('Mes Voyages'),
             onTap: () {
-              Navigator.pushNamed(context, Home.routName);
+              Navigator.pushNamed(context, TripsView.routeName);
             },
           ),
         ],
